@@ -11,7 +11,7 @@ class Element(object):
     def __init__(self, body='', **attributes):
         self.attributes = {}
         self.name = self.__class__.__name__
-        self.body = str(body).encode('ascii', 'xmlcharrefreplace')
+        self.body = str(body)
         self.node = None
         for k, v in attributes.items():
             if not k in self.valid_attributes:
@@ -42,7 +42,7 @@ class Element(object):
         raise PlivoError('%s not nestable in %s' % (element.name, self.name))
 
     def to_xml(self):
-        return etree.tostring(self.node, encoding="utf-8")
+        return etree.tostring(self.node)
 
     def __str__(self):
         return self.to_xml()
