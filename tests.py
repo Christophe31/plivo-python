@@ -7,8 +7,8 @@ import time
 import plivo
 
 try:
-    import urlparse
-    from urllib import urlencode
+    import urllib.parse
+    from urllib.parse import urlencode
 except:
     # For Python 3
     import urllib.parse as urlparse
@@ -1608,7 +1608,7 @@ class TestValidateRequestSignature(unittest.TestCase):
         form_data = 'Direction=inbound&From=Anonymous&CallerName=Anonymous&BillRate=0.0085&To=14154830338&' \
                     'CallUUID=69ffdb0d-27b6-424e-8e85-e733ddbd9e6a&CallStatus=ringing&Event=StartApp'
         expected_signature = '8SYmxFaaIfQvvfdxjYJobpI57wg='
-        params = dict(urlparse.parse_qsl(form_data, keep_blank_values=True))
+        params = dict(urllib.parse.parse_qsl(form_data, keep_blank_values=True))
         is_valid = plivo.validate_signature(uri, params, expected_signature, self.test_auth_token)
         self.assertTrue(is_valid)
 
@@ -1626,7 +1626,7 @@ class TestValidateRequestSignature(unittest.TestCase):
         params = {
             'From': '14087289654',
             'To': '14154830338',
-            'Text': u'Hello \xfcml\xe6t',
+            'Text': 'Hello \xfcml\xe6t',
             'TotalRate': '0',
             'Units': '1',
             'TotalAmount': '0',
@@ -1644,7 +1644,7 @@ class TestValidateRequestSignature(unittest.TestCase):
                     'HangupCause=USER_BUSY&BillRate=0.0085&To=14154830338&AnswerTime=&StartTime=2016-10-26+18%3A51%3A45&' \
                     'Duration=0&CallUUID=260e1bb4-5c1c-4e31-9035-8381d7639e2e&EndTime=2016-10-26+18%3A51%3A45&CallStatus=busy&' \
                     'Event=Hangup'
-        params = dict(urlparse.parse_qsl(form_data, keep_blank_values=True))
+        params = dict(urllib.parse.parse_qsl(form_data, keep_blank_values=True))
         expected_signature = 'WhLBwG3YobWjhg7mf/RARVDgg+w='
         is_valid = plivo.validate_signature(uri, params, expected_signature, 'ODE1ZmJkNzI3MzIwMmNmMDBiMDFiNjkxMDhlMjZj')
         self.assertTrue(is_valid)

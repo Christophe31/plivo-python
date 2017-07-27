@@ -13,7 +13,7 @@ except ImportError:
     import simplejson as json
 
 try:
-    from urlparse import urlparse, parse_qsl, urljoin
+    from urllib.parse import urlparse, parse_qsl, urljoin
 except ImportError:
     # For Python 3
     from urllib.parse import urlparse, parse_qsl, urljoin
@@ -49,7 +49,7 @@ def validate_signature(uri, post_params, signature, auth_token):
         encoded_request = uri.encode('utf-8')
     for k, v in sorted(all_params.items()):
         encoded_key = k.encode('utf-8')
-        if isinstance(v, unicode):
+        if isinstance(v, str):
             encoded_val = v.encode('utf-8')
         else:
             encoded_val = '' if v is None else str(v)

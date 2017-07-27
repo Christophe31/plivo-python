@@ -11,9 +11,9 @@ class Element(object):
     def __init__(self, body='', **attributes):
         self.attributes = {}
         self.name = self.__class__.__name__
-        self.body = unicode(body).encode('ascii', 'xmlcharrefreplace')
+        self.body = str(body).encode('ascii', 'xmlcharrefreplace')
         self.node = None
-        for k, v in attributes.iteritems():
+        for k, v in attributes.items():
             if not k in self.valid_attributes:
                 raise PlivoError('invalid attribute %s for %s' % (k, self.name))
             self.attributes[k] = self._convert_value(v)
@@ -24,16 +24,16 @@ class Element(object):
     @staticmethod
     def _convert_value(v):
         if v is True:
-            return u'true'
+            return 'true'
         elif v is False:
-            return u'false'
+            return 'false'
         elif v is None:
-            return u'none'
+            return 'none'
         elif v == 'get':
-            return u'GET'
+            return 'GET'
         elif v == 'post':
-            return u'POST'
-        return unicode(v)
+            return 'POST'
+        return str(v)
 
     def add(self, element):
         if element.name in self.nestables:
